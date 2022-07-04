@@ -73,19 +73,6 @@ PoseNet是剑桥大学提出的一种鲁棒、实时的6DOF（单目六自由度
 
 # 快速入门
 
-通过官方网站安装MindSpore后，您可以按照如下步骤进行训练和评估：
-
-
-  ```python
-  # 运行单机训练示例
-  bash run_standalone_train.sh [DATASET_NAME] [DEVICE_ID]
-
-  # 运行分布式训练示例
-  bash run_distribute_train.sh [DATASET_NAME] [RANK_TABLE]
-
-  # 运行评估示例
-  bash run_eval.sh [DEVICE_ID] [DATASET_NAME] [CKPT_PATH]
-  ```
 
   对于分布式训练，需要提前创建JSON格式的hccl配置文件。
 
@@ -168,21 +155,7 @@ PoseNet是剑桥大学提出的一种鲁棒、实时的6DOF（单目六自由度
 ### 单机训练
 
 
-  ```bash
-  bash run_standalone_train.sh [DATASET_NAME] [DEVICE_ID]
-  ```
 
-  上述python命令将在后台运行，您可以通过train.log文件查看结果。
-
-  训练结束后，您可在默认脚本文件夹下找到检查点文件。采用以下方式得到损失值：
-
-  ```bash
-  epoch:1 step:38, loss is 1722.1506
-  epcoh:2 step:38, loss is 1671.5763
-  ...
-  ```
-
-  模型检查点保存在checkpoint文件夹下。
 
 - GPU处理器环境运行
 
@@ -205,21 +178,7 @@ PoseNet是剑桥大学提出的一种鲁棒、实时的6DOF（单目六自由度
 ### 分布式训练
 
 
-  ```bash
-  bash run_distribute_train.sh [DATASET_NAME] [RANK_TABLE]
-  ```
-
-  上述shell脚本将在后台运行分布训练。您可以通过device[X]/log文件查看结果。采用以下方式达到损失值：
-
-  ```bash
-  device0/log:epoch:1 step:38, loss is 1722.1506
-  device0/log:epcoh:2 step:38, loss is 1671.5763
-  ...
-  device1/log:epoch:1 step:38, loss is 1722.1506
-  device1/log:epcoh:2 step:38, loss is 1671.5763
-  ...
-  ```
-
+  
 - GPU处理器环境运行
 
   ```bash
@@ -242,18 +201,6 @@ PoseNet是剑桥大学提出的一种鲁棒、实时的6DOF（单目六自由度
 ### 评估
 
 
-  在运行以下命令之前，请检查用于评估的检查点路径。
-  请将检查点路径设置为相对路径，例如“../checkpoint/train_posenet_KingsCollege-790_38.ckpt”。
-
-  ```bash
-  bash run_eval.sh [DEVICE_ID] [DATASET_NAME] [CKPT_PATH]
-  ```
-
-  上述python命令将在后台运行，您可以通过eval/eval.log文件查看结果。测试数据集的准确性如下：
-
-  ```bash
-  Median error  3.56644630432129 m  and  3.07089155413442 degrees
-  ```
 
 - 在GPU环境运行时评估KingsCollege数据集
 
@@ -315,7 +262,9 @@ result_path 为输出路径。
 
 #### KingsCollege上的PoseNet
 
+| 参数                 | Ascend                                                      | GPU                    |
 | -------------------------- | ----------------------------------------------------------- | ---------------------- |
+| 资源                   | Ascend 910 ；CPU 2.60GHz，192核；内存：755G             | NV SMX2 V100-32G       |
 | 上传日期              | 2021-03-26                                 | 2021-05-20 |
 | MindSpore版本          | 1.1.1                                                 | 1.2.1            |
 | 数据集                    | KingsCollege                                                    | KingsCollege               |
@@ -333,7 +282,9 @@ result_path 为输出路径。
 
 #### StMarysChurch上的PoseNet
 
+| 参数                 | Ascend                                                      | GPU                    |
 | -------------------------- | ----------------------------------------------------------- | ---------------------- |
+| 资源                   | Ascend 910 ；CPU 2.60GHz，192核；内存：755G             | NV SMX2 V100-32G       |
 | 上传日期              | 2021-03-26                                 | 2021-05-20 |
 | MindSpore版本          | 1.1.1                                                 | 1.2.1            |
 | 数据集                    | StMarysChurch                                                    | StMarysChurch               |
@@ -353,25 +304,29 @@ result_path 为输出路径。
 
 #### KingsCollege上的PoseNet
 
-| ------------------- | --------------------------- | --------------------------- |
-| 上传日期       | 2021-03-26 | 2021-05-20 |
-| MindSpore 版本   | 1.1.1                 | 1.2.1            |
-| 数据集             | KingsCollege     | KingsCollege               |
-| batch_size          | 1                         | 1                         |
-| 输出             | 距离、角度                 |距离、角度                 |
-| 准确性            | 单卡: 1.928米 4.24度;  8卡：1.89米 4.31度   | 8卡：1.80米 3.68度   |
-| 推理模型 | 41.66M (.mindir文件)         | 41.66M (.mindir文件)         |
+| 参数          | GPU                         |
+| ------------------- |  --------------------------- |
+| 资源            |  GPU                         |
+| 上传日期       |  2021-05-20 |
+| MindSpore 版本   |1.2.1            |
+| 数据集             |  KingsCollege               |
+| batch_size          |  1                         |
+| 输出             | 距离、角度                 |
+| 准确性            |  8卡：1.80米 3.68度   |
+| 推理模型 |  41.66M (.mindir文件)         |
 
 #### StMarysChurch上的PoseNet
 
-| ------------------- | --------------------------- | --------------------------- |
-| 上传日期       | 2021-03-26 | 2021-05-20 |
-| MindSpore 版本   | 1.1.1                 | 1.2.1            |
-| 数据集             | StMarysChurch     | StMarysChurch     |
-| batch_size          | 1                         | 1                         |
-| 输出             | 距离、角度                 | 距离、角度                 |
-| 准确性            | 单卡: 1.884米 7.20度;  8卡：1.90米 6.23度   | 8卡：1.89米 6.24度   |
-| 推理模型 | 41.66M (.mindir文件)         | 41.66M (.mindir文件)         |
+| 参数          |  GPU                         |
+| ------------------- | --------------------------- |
+| 资源            |  GPU                         |
+| 上传日期       |  2021-05-20 |
+| MindSpore 版本   |  1.2.1            |
+| 数据集             |  StMarysChurch     |
+| batch_size          |  1                         |
+| 输出             |  距离、角度                 |
+| 准确性            |  8卡：1.89米 6.24度   |
+| 推理模型 |  41.66M (.mindir文件)         |
 
 ## 迁移学习
 
